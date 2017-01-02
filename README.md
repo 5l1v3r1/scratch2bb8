@@ -4,6 +4,9 @@ scratch2bb8 is [ScratchX](http://scratchx.org/) extension that enables Scratch t
 
 [![scratch2bb8 Demo](http://champierre.github.io/scratch2bb8/images/scratch2bb8.gif?201701022333)](https://youtu.be/SbaQOMwa3yk)
 
+&raquo; [Demo movie on YouTube](https://youtu.be/SbaQOMwa3yk)
+
+
 ## Platforms
 
 - MacOS 10.12.2(Sierra)
@@ -46,6 +49,6 @@ To control BB-8, Helper App needs to be installed. You need node.js to run it.
 
 6. If the Helper App says "Working.", you can control BB-8 from ScratchX using the custom blocks in "More Blocks" group.
 
-![blocks](http://champierre.github.io/scratch2bb8/images/blocks.png?201701022333)
+  ![blocks](http://champierre.github.io/scratch2bb8/images/blocks.png?201701022333)
 
-![square](http://champierre.github.io/scratch2bb8/images/bb8_square.png?201701022333)
+  ![square](http://champierre.github.io/scratch2bb8/images/bb8_square.png?201701022333)

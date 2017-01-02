@@ -9,8 +9,6 @@ var Cylon = require('cylon');
 const PORT = 8080;
 const STEPS_BASE = 50;
 
-var readline = require('readline');
-var rl = readline.createInterface(process.stdin, process.stdout);
 var heading = 0;
 
 function getQueryObj(req) {
@@ -24,29 +22,11 @@ function getQueryObj(req) {
   // var obj = JSON.parse( queryObj.jsonData );
 }
 
-noble.on('stateChange', function(state) {
-  if (state === 'poweredOn') {
-    console.log("Starting scan.");
-    noble.startScanning();
-  } else {
-    console.log("Stopping scan.");
-    noble.stopScanning();
-  }
-});
-
-var i = 1;
-var uuids = [];
-
-noble.on('discover', function(peripheral) {
-  var name = peripheral.advertisement.localName
-  var uuid = peripheral.id;
-  if (name.startsWith('BB-')) {
-    console.log("BB-8 is discovered!");
-    console.log("[" + i + "] Name: " + name);
-    console.log("    UUID: " + uuid);
-    uuids.push(uuid);
-  }
-});
+var uuid = process.env.UUID;
+if (uuid == null) {
+  console.log("Specify UUID as 'UUID=xxxxxx node scratch2bb8_helper.js'.\nRun 'node_modules/.bin/cylon-ble-scan' to scan devices.");
+  process.exit();
+}
 
 var server = http.createServer(function (req, res) {
   dispatcher.dispatch(req, res);
@@ -54,7 +34,7 @@ var server = http.createServer(function (req, res) {
 
 Cylon.robot({
   connections: {
-    bluetooth: { adaptor: 'central', uuid: '97c218e5d6c249b68ca46e05dd614f8a', module: 'cylon-ble'}
+    bluetooth: { adaptor: 'central', uuid: uuid, module: 'cylon-ble'}
   },
   devices: {
     bb8: { driver: 'bb8', module: 'cylon-sphero-ble'}
@@ -89,7 +69,6 @@ Cylon.robot({
         } else if (heading >= 360) {
           heading = heading - 360;
         }
-        console.log('heading:', heading);
         my.bb8.roll(0, heading);
       });
     });
@@ -108,20 +87,31 @@ Cylon.robot({
         } else if (heading >= 360) {
           heading = heading - 360;
         }
-        console.log('heading:', heading);
         my.bb8.roll(0, heading);
       });
     });
 
     dispatcher.onGet('/backward', function(req, res) {
+      var steps = parseInt(getQueryObj(req).steps, 10);
+
       res.writeHead(200, {'Content-Type': 'text/plain'});
       res.end('backward');
 
+      original_heading = heading;
+      heading = heading - 180;
+      if (heading < 0) {
+        heading = 360 + heading;
+      } else if (heading >= 360) {
+        heading = heading - 360;
+      }
+
       after(100, function() {
-        my.bb8.roll(60, 180);
+        console.log('backward');
+        my.bb8.roll(60, heading);
       });
-      after(1500, function() {
-        my.bb8.stop();
+      after(STEPS_BASE * steps, function() {
+        my.bb8.roll(0, original_heading);
+        heading = original_heading;
       });
     });
 
@@ -138,16 +128,3 @@ Cylon.robot({
     });
   }
 }).start();
-
-
-after(3000, function() {
-  rl.question('which one: ', function(which) {
-
-    selected = uuids[which - 1];
-    if (selected != null) {
-      console.log(selected + ' is selected.');
-
-
-    }
-  });
-});

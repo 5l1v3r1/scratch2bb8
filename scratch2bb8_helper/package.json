@@ -1,0 +1,15 @@
+{
+  "name": "scratch2bb8_helper",
+  "version": "1.0.0",
+  "description": "Scratch2bb8 lets you control Sphero BB8 from ScratchX",
+  "main": "scratch2bb8_helper.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Junya Ishihara <junya@champierre.com>",
+  "license": "MIT",
+  "dependencies": {
+    "cylon-sphero-ble": "^0.11.0",
+    "httpdispatcher" : "^2.0.0"
+  }
+}

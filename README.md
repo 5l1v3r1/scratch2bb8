@@ -37,7 +37,7 @@ To control BB-8, Helper App needs to be installed. You need node.js to run it.
 
   ```
   % cd scratch2bb8/scratch2bb8_helper
-  $ node_modules/.bin/cylon-ble-scan
+  % node_modules/.bin/cylon-ble-scan
   (Ctrl-C to exit)
   ```
 

@@ -11,5 +11,9 @@
   "dependencies": {
     "cylon-sphero-ble": "^0.11.0",
     "httpdispatcher" : "^2.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:champierre/scratch2bb8.git"
   }
 }

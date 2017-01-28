@@ -26,6 +26,8 @@ var uuid = process.env.UUID;
 if (uuid == null) {
   console.log("Specify UUID as 'UUID=xxxxxx node scratch2bb8_helper.js'.\nRun 'node_modules/.bin/cylon-ble-scan' to scan devices.");
   process.exit();
+} else {
+  console.log("Control BB-8 from\n\nhttp://scratchx.org/?url=http://champierre.github.io/scratch2bb8/scratch2bb8.js\n")
 }
 
 var server = http.createServer(function (req, res) {
